@@ -21,3 +21,5 @@ Browser testing required permission to run outside the restricted execution envi
 Run `node verify.cjs` with Playwright and Microsoft Edge installed to repeat. The test uses a temporary browser profile and fictional records. Screenshots are stored in ignored test-results/.
 
 No GitHub upload or live deployment performed. Original CareCheck logo and full prior requirements were unavailable.
+
+Branding update: supplied original CareCheck logo integrated in login/sidebar; browser workflow checks passed again. Desktop and mobile screenshots regenerated. The original logo is now available; full earlier requirements remain unavailable.

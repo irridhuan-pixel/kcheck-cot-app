@@ -22,7 +22,7 @@ All starter records are fictional. Use demo information only. Local browser stor
 
 ## Branding and scope
 
-The previous conversation's detailed assistant messages and original CareCheck logo could not be retrieved. The two available screenshots establish the KCHECK name, COT Automotive / PSMZA, COT Admin and simulated demo login. This implementation is provisional until the full agreed requirements and original logo are supplied. The K monogram is a clearly identified placeholder, not a recreation of the CareCheck logo.
+The supplied original CareCheck logo is included unchanged in assets/carecheck-logo.png and displayed on the login screen and sidebar. CSS frames the logo to hide the source image's large white margins. KCHECK remains the application name. The previous conversation's detailed assistant messages could not be retrieved; full agreed requirements remain to be confirmed.
 
 Not included: production authentication, server database, customer portal, multi-user synchronization, messaging, payments, attachments or production deployment.
 
