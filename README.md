@@ -58,3 +58,31 @@ The service statuses remain Queued, In progress, Ready, Completed and Cancelled.
 Run `npm run check` for syntax checks. To repeat optional browser QA, install Playwright locally without saving it to package.json, then run `npm run test:browser`. The test starts its own server on port 4173; stop any existing preview first. See TEST-RESULTS.md for verified checks.
 
 Source is maintained on the stage1-demo branch of https://github.com/irridhuan-pixel/kcheck-cot-app. Relative asset paths support static hosting under a repository subdirectory. No deployment workflow is included. GitHub Pages, Netlify and live site configuration are unchanged.
+
+## Dashboard charts
+
+The dashboard now shows monthly service registrations, verified demo payment amounts and on-time completion, with a 6/12-month selector and expandable data tables. Payment totals use only current approved quotations and the latest recorded verification date. They represent simulated collections, not actual sales. No historical figures are fabricated.
+
+Service forms include optional Target completion date and Actual completion date. Marking a job Completed records today if the actual date is blank. The on-time rate includes only Completed jobs with both dates and groups them by completion month; completion on the target date counts as on time. Missing timing is reported separately and excluded. Services are grouped by their recorded service date, including cancelled requests. Charts use the browser's local calendar.
+
+analytics.js contains the chart calculations and SVG rendering; no external chart library or network dependency is required. Run npm run test:analytics for deterministic aggregation checks.
+
+## 32-point pre-check and guided helper
+
+Open **32-point Pre-check** in admin navigation, or select a demo customer and choose **Start 32-point pre-check** in the portal. The custom checklist has eight groups of four owner observations. Each point can be Not checked, No concern observed, Needs check / unsure, Safety concern or Not applicable. Only observe safely while parked, engine off and cooled. Do not dismantle, lift, crawl underneath or road-test. This is not an official inspection standard or roadworthiness certificate.
+
+Save observations to this browser, print a summary and create one linked queued service request for coordinator review. Concern categories produce suggested professional assessments, not diagnoses, confirmed repairs or costs. Safety-priority observations route to professional assistance; no all-clear certification is generated. The customer selector scopes available demo vehicles but is not authentication.
+
+The **Guided help** chat uses local keyword rules and current selected checklist findings. It is explicitly offline guided assistance, not a live generative AI model. It supports checklist help, common symptom routing, suggested assessment categories, quotation and demo-payment FAQs. Messages are held only in tab memory, are not saved and are not sent anywhere. It cannot inspect photographs or answer arbitrary questions.
+
+GitHub stores the app code. Downloaded source can run locally without an internet connection; a hosted page still needs a connection to load unless separately cached. No service worker or offline installation is included. An online AI chatbot would require a secure backend; never put an AI API key in this public-facing JavaScript or in GitHub.
+
+General guidance references (not Malaysian legal inspection criteria):
+- https://www.gov.uk/guidance/the-highway-code/annex-6-vehicle-maintenance-safety-and-security
+- https://www.nhtsa.gov/vehicle-safety/tires
+
+Always follow the vehicle manufacturer's handbook and applicable local requirements. The 32-point grouping is specific to this demonstration. No claim of professional validation is made.
+
+inspection.js contains the checklist, assessment rules and guided chat. Run npm run test:inspection to check point uniqueness, recommendation grouping and safety routing.
+
+The chart style now includes navy bars with a yellow highest-value highlight, a navy payment trend line with yellow points and a service-type ranking table with search and Top 5 filters. Ranking share is a share of registrations, not a quality score.
