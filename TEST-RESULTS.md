@@ -1,25 +1,25 @@
-# Verification — 27 October 2026
+# Verification — KCHECK Stage 1 version 2, 27 October 2026
 
-PASS: JavaScript syntax checks for app.js, server.cjs and verify.cjs.
+PASS: JavaScript syntax checks for core app, enhancements, server and browser QA.
 
-PASS: Automated headless Microsoft Edge checks against the local HTML file:
+PASS: Automated Microsoft Edge tests over the local HTTP server:
 
-- COT Admin demo login and sign-out.
-- Service creation, opening, editing and Completed status.
-- Entered script-like text displays as literal text, with no execution.
-- Browser-local persistence after reload.
-- Search and status filter.
-- CSV download with expected filename.
-- Customer creation, vehicle creation and customer linkage.
-- Duplicate vehicle registration rejected.
-- Confirmed reset restores the three starter services.
-- Desktop (1440px) and mobile (390px) screenshots inspected.
-- No JavaScript page errors throughout the workflow.
+- HTTP startup and working CSS, JavaScript and relative portal navigation.
+- Admin demo sign-in and all ten navigation destinations.
+- Quotation with multiple items, quantity, labour, discount and tax: RM 148.40 expected and rendered.
+- Repair blocked before approval of the current quotation.
+- Portal customer selection scopes displayed records and available decisions.
+- Simulated approval unlocks repair progression.
+- Receipt submission remains Receipt Submitted and does not expose a verified receipt.
+- Separate admin verification enables the demo receipt.
+- Browser print invocation and generated A4 PDF output.
+- Quotation revision increments version and clears earlier approval/payment verification.
+- Editable workshop settings persist after reload.
+- Admin and customer portal desktop and mobile screenshots generated and visually reviewed.
+- No JavaScript page errors during tested workflows.
 
-Browser testing required permission to run outside the restricted execution environment. The HTTP preview was inaccessible across that boundary; functional checks therefore used the directly opened index.html file. The optional local HTTP server was syntax-checked, but its browser workflow was not separately verified.
+The header overlap found during visual review was corrected and the browser suite rerun. The original core create/edit/search/filter/CSV/reset workflows were also tested in version 1; the expanded suite focuses on the new workflows. This is not a production security audit, and no actual authentication, payment processing or WhatsApp sending is claimed.
 
-Run `node verify.cjs` with Playwright and Microsoft Edge installed to repeat. The test uses a temporary browser profile and fictional records. Screenshots are stored in ignored test-results/.
+Run npm run test:browser with Playwright and Microsoft Edge installed. It starts a local HTTP server on port 4173, uses an isolated temporary browser profile and exits after testing. Screenshots/PDFs remain in ignored test-results/. Browser testing requires permission outside the restricted execution environment on this computer.
 
-No GitHub upload or live deployment performed. Original CareCheck logo and full prior requirements were unavailable.
-
-Branding update: supplied original CareCheck logo integrated in login/sidebar; browser workflow checks passed again. Desktop and mobile screenshots regenerated. The original logo is now available; full earlier requirements remain unavailable.
+No live deployment, GitHub Pages configuration, Firebase setup or customer-data upload performed.

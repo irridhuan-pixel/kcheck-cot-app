@@ -1,54 +1,60 @@
-# KCHECK Service Tracker — Stage 1
+# KCHECK Service Tracker — Stage 1, version 2
 
-Functional HTML/CSS/JavaScript demo for COT Automotive, PSMZA. No build step or external dependencies. No IBM Bob required.
+Responsive HTML/CSS/JavaScript demo for COT Automotive, PSMZA. Includes the supplied original CareCheck logo and Alif Workshop coordination settings.
 
-## Run
+## Review locally
 
-Open `index.html` directly, or install Node.js and run `npm start`, then visit http://127.0.0.1:4173. The local server is bound to this computer only.
+Extract the complete project ZIP, including assets/. With Node.js installed, run `npm start` in this directory. No dependency installation is needed.
 
-Sign in with any syntactically valid email and any non-empty password. Choose COT Admin. Passwords and email addresses are not retained or sent anywhere. This is a simulated login, not an access-control system.
+Admin: http://127.0.0.1:4173
+Customer preview: http://127.0.0.1:4173/portal.html
 
-## Included
+Sign in with any valid email and non-empty password. Credentials are never retained or sent. Use the same browser and origin for admin and portal so both share the local records. HTTP is the recommended review method.
 
-- Overview with live counts, pipeline and recent changes.
-- Create and edit customers and vehicles, including duplicate registration checks.
-- Create service jobs, assign a technician, set date and priority, record notes, and update status.
-- Search records and filter services by status.
-- Export all records in the selected section as CSV (ignores the visible search/filter).
-- Browser-local persistence, sign-out and confirmed demo-data reset.
-- Responsive layout, native form validation and keyboard-accessible controls.
+## Included features
 
-All starter records are fictional. Use demo information only. Local browser storage is not encrypted or shared across devices. Reset demo data from Overview to remove local edits. Browser storage restrictions can prevent persistence; the UI reports save failures.
+- Screenshot-inspired dark sidebar, light workspace and red accents.
+- Dynamic dashboard, customer and vehicle management, service editing, search, status filters and CSV export.
+- Quotations with multiple items, labour, other charges, discount, tax and calculated MYR totals.
+- Quotation drafts, approval requests, customer approval/rejection/revision simulations.
+- Current quotation approval required before changing a service into In progress, Ready or Completed. Starter jobs represent fictional existing work.
+- Revision increments the quotation version, clears approval and payment verification, and returns affected repair records to Queued.
+- Customer portal: demo customer selector, linked vehicles/services, quotation decisions, simulated receipt submission and printable documents.
+- Receipt submission is separate from admin review and verification. No real receipt files are collected.
+- Fictional bank reference and non-functional QR placeholder, labelled DEMO — NOT FOR PAYMENT.
+- A4 browser-print quotations, service reports, itemised demo invoices and verified demo receipts. Use Save as PDF in the print dialog.
+- Editable organisation, workshop and document footer.
+- WhatsApp-style service message preview and copy; no automatic sending or real phone lookup.
+- Browser-local persistence and cross-tab refresh on saved changes.
 
-## Branding and scope
+## Try the approval workflow
 
-The supplied original CareCheck logo is included unchanged in assets/carecheck-logo.png and displayed on the login screen and sidebar. CSS frames the logo to hide the source image's large white margins. KCHECK remains the application name. The previous conversation's detailed assistant messages could not be retrieved; full agreed requirements remain to be confirmed.
+1. Sign in, open Quotations and create a quotation for KC-1002.
+2. Enter items as description | quantity | unit price, one per line. Save and request demo approval.
+3. Open Customer Portal, choose Demo Customer B and simulate approval.
+4. In admin, change that service from Queued to In progress.
+5. In the portal, simulate receipt submission. Its status remains Receipt Submitted.
+6. In admin Payments, review and simulate verification. A demo receipt becomes printable.
+7. Revise the quotation: previous approval and payment verification are cleared.
 
-Not included: production authentication, server database, customer portal, multi-user synchronization, messaging, payments, attachments or production deployment.
+## Project files
 
-## GitHub handoff
+- index.html / portal.html: admin and portal entry pages.
+- app.js: core records, forms, dashboard and storage.
+- enhancements.js: quotations, portal, payments, documents, settings and coordination.
+- styles.css / theme.css: base styles, screenshot-inspired theme and A4 printing.
+- assets/carecheck-logo.png: supplied logo, unchanged.
+- server.cjs: loopback-only server with an explicit file allowlist.
+- verify.cjs / verify-v2.cjs: optional browser checks (Playwright and Microsoft Edge required).
 
-This folder is ready for a GitHub repository. Do not add customer information, credentials, browser exports or private screenshots. No automatic publishing workflow is included.
+## Limitations
 
-After creating an empty **private** repository on GitHub, from this folder run:
+This is a simulation, not secure customer access or financial processing. All shipped customer records are fictional. Do not store real customer information, passwords, banking data or receipts here. Browser storage is editable by its user and is not encrypted or shared across devices. Firebase and production authentication are not connected.
 
-```sh
-git remote add origin https://github.com/YOUR-ACCOUNT/kcheck-service-tracker.git
-git push -u origin main
-```
+The service statuses remain Queued, In progress, Ready, Completed and Cancelled. Vehicle brand/model master data, deletion, attachments, full quotation version archives, per-service audit histories and production invoices are not implemented. Printable documents are demonstrations, not validated Malaysian e-Invoices. Background IBM Bob prompts were not executed.
 
-GitHub Pages or any live-site deployment requires separate approval. No remote repository or live site is created by these local files.
+## Testing and GitHub
 
-## Manual acceptance checks
+Run `npm run check` for syntax checks. To repeat optional browser QA, install Playwright locally without saving it to package.json, then run `npm run test:browser`. The test starts its own server on port 4173; stop any existing preview first. See TEST-RESULTS.md for verified checks.
 
-1. Submit an invalid email or empty password: browser blocks entry. A valid demo entry opens Overview.
-2. Add a customer, then vehicle: both appear in their lists. Reusing a vehicle registration shows a validation error.
-3. Create a service for that vehicle: it appears in Services and Overview counts update.
-4. Open a service, change to Completed and save: its badge and dashboard counts update.
-5. Search a registration and filter a status: only matching services appear. No-match queries show an empty state.
-6. Reload: changes persist on the same browser origin. Sign out: the login screen returns.
-7. Export CSV: all section records are downloaded. Formula-like leading characters are escaped.
-8. Reset demo data: Cancel preserves records; confirm restores starter records.
-9. Check narrow mobile width: navigation and tables remain accessible.
-
-See `TEST-RESULTS.md` for executed verification.
+Source is maintained on the stage1-demo branch of https://github.com/irridhuan-pixel/kcheck-cot-app. Relative asset paths support static hosting under a repository subdirectory. No deployment workflow is included. GitHub Pages, Netlify and live site configuration are unchanged.
