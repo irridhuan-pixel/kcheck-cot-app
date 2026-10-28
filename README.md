@@ -101,6 +101,9 @@ Photo blobs are saved in IndexedDB on this browser/origin, rather than in localS
 
 Customer sign-in and sign-up screens are available as disabled previews. They do not collect passwords, register accounts, authenticate users or protect records. Secure sign-up/sign-in requires backend identity and server-enforced record/media ownership; this setup is pending the user's choice. Existing demo customer selection remains clearly labelled.
 
-The supplied real bank/QR image is not included in the repository or ZIP, not served by the local server and not substituted into the non-payable demo payment screen. Publishing/using the real payment details is pending confirmation. No automatic payment verification has been added.
+The supplied real bank/QR image is now included in assets/alif-payment.jpeg and displayed in a separate Workshop bank / QR dialog, following explicit user authorisation on 28 October 2026. Its real recipient is Alif Auto Motorsport (Maybank). All quotation amounts and transaction statuses in the demo remain simulated; the dialog directs users to confirm actual invoices with the workshop. No automatic payment verification is configured.
 
 vehicle-media.js contains optional vehicle fields and IndexedDB galleries. customer-access.js contains the pending-setup account screen previews. Run npm run test:media for browser coverage of vehicle data, galleries, captions, filtering, deletion/reset and disabled account screens.
+
+
+Real secure accounts were selected. Firebase project creation is the next external setup step; see FIREBASE-SETUP.md. Sign-up/sign-in remains disabled until the backend, ownership rules and access tests are implemented. The bank instructions are enabled separately and do not activate real account access.

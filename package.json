@@ -5,10 +5,11 @@
   "description": "KCHECK Stage 1 browser-local automotive service tracker demo",
   "scripts": {
     "start": "node server.cjs",
-    "check": "node --check app.js && node --check enhancements.js && node --check server.cjs && node --check analytics.js && node --check inspection.js && node --check vehicle-media.js && node --check customer-access.js",
+    "check": "node --check app.js && node --check enhancements.js && node --check server.cjs && node --check analytics.js && node --check inspection.js && node --check vehicle-media.js && node --check customer-access.js && node --check workshop-payment.js",
     "test:browser": "node verify-v2.cjs",
     "test:analytics": "node verify-analytics.cjs",
     "test:inspection": "node verify-inspection.cjs",
-    "test:media": "node verify-media.cjs"
+    "test:media": "node verify-media.cjs",
+    "test:bank": "node verify-bank.cjs"
   }
 }
