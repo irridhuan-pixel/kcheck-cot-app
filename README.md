@@ -115,3 +115,5 @@ The supplied Firebase web configuration is now connected to a separate secure.ht
 firestore.rules contains server-enforced ownership and field validation for customer vehicles and service requests. storage.rules denies all production photo access until that feature is implemented/tested. Protected record forms are gated off until tested Firestore rules are deployed. Existing local demo functions remain labelled demonstrations.
 
 See FIREBASE-SETUP.md for project-owner setup, test status and remaining limitations. Older notes that accounts are disabled previews are superseded by this separate Firebase account entry; protected customer record access still requires deployment and activation. No website, billing or cloud-storage deployment is included.
+
+Account startup now has an independent 15-second watchdog (secure-startup.js). Slow or blocked Firebase modules, missing account scripts, unavailable session storage and direct file opening produce actionable messages and a Retry connection button. Cache-versioned entry scripts request updated account code. Run npm run test:startup to check normal and blocked loading without account creation.

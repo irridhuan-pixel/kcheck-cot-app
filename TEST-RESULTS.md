@@ -51,3 +51,9 @@ Firebase accounts — 28 October 2026:
 - Local Firestore emulator startup is blocked by Windows Unix-socket loopback; rule tests succeeded in Linux CI instead.
 - Production rule deployment and end-to-end customer-record tests await project-owner CLI sign-in. Protected record forms remain gated off. No cloud photo access is permitted by the supplied Storage rules.
 - GitHub Pages was discovered to auto-publish stage1-demo. The integration push triggered that existing deployment and was disclosed. Follow-up source changes use firebase-accounts; no hosting settings were altered.
+
+Account startup resilience — 28 October 2026:
+- Public GitHub account page loaded successfully in a fresh isolated browser. The screenshot's stalled load was not reproduced there; no exact client-specific cause was established.
+- PASS browser tests for normal SDK loading, aborted SDK requests, a deliberately stalled entry module (15-second independent watchdog), missing module, file:// explanation and mobile retry view.
+- Successful sign-in screen is not overwritten by the watchdog. No real account operations or emails were used in these tests.
+- Fix prepared on firebase-accounts; publishing to the auto-deployed stage1-demo branch requires user approval.

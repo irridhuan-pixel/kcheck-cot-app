@@ -1,18 +1,19 @@
 {
   "name": "kcheck-service-tracker",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "private": true,
   "description": "KCHECK Stage 1 browser-local automotive service tracker demo",
   "scripts": {
     "start": "node server.cjs",
-    "check": "node --check app.js && node --check enhancements.js && node --check server.cjs && node --check analytics.js && node --check inspection.js && node --check vehicle-media.js && node --check customer-access.js && node --check workshop-payment.js && node --check secure-app.mjs && node --check firebase-config.mjs",
+    "check": "node --check app.js && node --check enhancements.js && node --check server.cjs && node --check analytics.js && node --check inspection.js && node --check vehicle-media.js && node --check customer-access.js && node --check workshop-payment.js && node --check secure-app.mjs && node --check firebase-config.mjs && node --check secure-startup.js",
     "test:browser": "node verify-v2.cjs",
     "test:analytics": "node verify-analytics.cjs",
     "test:inspection": "node verify-inspection.cjs",
     "test:media": "node verify-media.cjs",
     "test:bank": "node verify-bank.cjs",
     "test:firebase-rules": "firebase emulators:exec --only firestore --project demo-kcheck-security \"node verify-firebase-rules.mjs\"",
-    "test:firebase-auth": "firebase emulators:exec --only auth --project demo-kcheck-security \"node verify-firebase-auth.cjs\""
+    "test:firebase-auth": "firebase emulators:exec --only auth --project demo-kcheck-security \"node verify-firebase-auth.cjs\"",
+    "test:startup": "node verify-secure-startup.cjs"
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^6.0.0",
