@@ -86,3 +86,21 @@ Always follow the vehicle manufacturer's handbook and applicable local requireme
 inspection.js contains the checklist, assessment rules and guided chat. Run npm run test:inspection to check point uniqueness, recommendation grouping and safety routing.
 
 The chart style now includes navy bars with a yellow highest-value highlight, a navy payment trend line with yellow points and a service-type ranking table with search and Top 5 filters. Ranking share is a share of registrations, not a quality score.
+
+## Vehicle specifications and before/after photos — version 2.2
+
+Edit a vehicle to record optional manufacture year, odometer in km, tyre size, colour, fuel/power type and transmission. Values are validated, persist in this browser and appear in the vehicle list, linked customer vehicle card, vehicle CSV export and printable service documents. These are current vehicle details, not historical odometer snapshots at each visit.
+
+Open Photos on a service or Before / after photos in the selected demo customer's portal. Each service has separate Before and After galleries (up to six photos per stage), captions and individual deletion. Upload JPEG, PNG or WebP images, up to 10 MB per source file. Images are decoded and re-encoded as JPEG, limited to 1600 pixels on the longest edge. Original filenames and EXIF/GPS metadata are not retained in the converted image.
+
+Take photo uses the mobile browser's capture-enabled file picker. Camera availability and permission behaviour depend on the device/browser; this is not a live camera streaming feature. Physical camera capture was not tested on a phone. HEIC and SVG are unsupported; convert to JPEG first if needed.
+
+Photo blobs are saved in IndexedDB on this browser/origin, rather than in localStorage or source files. They never go to GitHub. Closing/reloading retains them, but clearing browser data removes them. There is no cloud upload, cross-device sharing, backup or secure production media access. Use non-sensitive demo images only. Reset demo data deletes the stored photo galleries as well as demo records.
+
+## Customer accounts and supplied bank image — pending decisions
+
+Customer sign-in and sign-up screens are available as disabled previews. They do not collect passwords, register accounts, authenticate users or protect records. Secure sign-up/sign-in requires backend identity and server-enforced record/media ownership; this setup is pending the user's choice. Existing demo customer selection remains clearly labelled.
+
+The supplied real bank/QR image is not included in the repository or ZIP, not served by the local server and not substituted into the non-payable demo payment screen. Publishing/using the real payment details is pending confirmation. No automatic payment verification has been added.
+
+vehicle-media.js contains optional vehicle fields and IndexedDB galleries. customer-access.js contains the pending-setup account screen previews. Run npm run test:media for browser coverage of vehicle data, galleries, captions, filtering, deletion/reset and disabled account screens.

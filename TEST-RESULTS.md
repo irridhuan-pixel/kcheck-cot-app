@@ -33,3 +33,12 @@ Pre-check and guided helper:
 - PASS pure checks: 32 unique points, answer counts, safety-priority detection, deduplicated assessment suggestions, urgent symptom routing, offline disclosure and unsupported-question fallback.
 - Browser coverage expanded to checklist persistence, single linked service request, portal vehicle scoping, summary printing, chat text escaping, chart ranking search and Top 5 filtering.
 PASS: full HTTP browser suite including 32-point pre-check persistence, duplicate-request prevention, scoped portal checklist, chatbot disclosure/text safety, print summary and ranking filters. Desktop/mobile screenshots inspected. No browser page errors. No live AI connection or live-site deployment performed.
+
+28 October 2026 — vehicle details, media and account screen previews:
+- PASS: optional vehicle year/odometer/tyre size/colour/fuel/transmission save and survive reload; invalid negative odometer rejected.
+- PASS: before/after test photo upload, display, IndexedDB persistence, captions, unsupported-format rejection, no photo data in localStorage, customer-filtered gallery, deletion and reset cleanup.
+- PASS: capture-enabled inputs configured for both photo stages. Physical mobile camera capture is NOT verified.
+- PASS: customer sign-up/sign-in preview navigation; fields and submit controls disabled while secure backend setup is pending. Real authentication is NOT implemented or tested.
+- PASS: no page errors in the media browser suite; desktop/mobile screenshots inspected. Test photos were generated non-sensitive fixtures, not customer images.
+- The real bank/QR image remains outside the app and repository. Payment screen continues to use non-payable demo information.
+PASS: full HTTP regression suite after the vehicle/media update, including dashboard charts, pre-checks, quotations, approval guards, payment simulation and customer portal. No browser page errors.
