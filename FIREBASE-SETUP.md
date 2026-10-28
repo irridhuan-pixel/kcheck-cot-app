@@ -16,7 +16,7 @@ The owner supplied public web configuration for kcheck-service-tracker. It is sa
 
 protectedWorkspaceReady in firebase-config.mjs is false. Account authentication can operate once Email/Password and authorised domains are configured, but the app will not expose a customer-record form until tested rules are deployed and the gate is enabled. A client flag is not the security boundary; the deployed Firebase rules must enforce access independently.
 
-The local Firestore emulator could not start due to a Windows Unix-socket error. A GitHub Linux CI workflow runs the supplied ownership tests against an emulated demo project without production credentials. Do not enable the record workspace unless those tests pass and the exact tested rules are deployed.
+The local Firestore emulator could not start due to a Windows Unix-socket error. A GitHub Linux CI workflow runs the supplied ownership tests against an emulated demo project without production credentials. The ownership tests passed on GitHub Linux CI (run 40692237056). Local Firebase Auth emulator tests also passed. Do not enable the record workspace until those exact tested rules are deployed.
 
 ## Required project-owner setup
 
@@ -42,3 +42,10 @@ Official documentation:
 - https://firebase.google.com/docs/auth/web/password-auth
 - https://firebase.google.com/docs/rules/rules-and-auth
 - https://firebase.google.com/docs/rules/unit-tests
+
+
+## Current owner action
+
+In the project terminal run .\connect-firebase.ps1. The helper invokes the official Firebase CLI, displays its Google sign-in link, and accepts the returned authorisation code through a hidden terminal prompt. Do not paste the code into chat. The helper does not deploy rules or the website; it only authorises the CLI. After sign-in, the agent can check the project/default database and deploy only the tested Firestore rules.
+
+GitHub Pages was found to auto-deploy stage1-demo. The integration source push triggered that existing Pages workflow; this was reported to the user. Further source changes are on the firebase-accounts branch to avoid triggering the publishing branch. No hosting settings were changed.

@@ -1,7 +1,7 @@
 name: Firebase ownership rules
 on:
   push:
-    branches: [stage1-demo]
+    branches: [stage1-demo, firebase-accounts]
   workflow_dispatch:
 permissions:
   contents: read

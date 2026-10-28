@@ -43,3 +43,11 @@ PASS: full HTTP browser suite including 32-point pre-check persistence, duplicat
 - The real bank/QR image remains outside the app and repository. Payment screen continues to use non-payable demo information.
 PASS: full HTTP regression suite after the vehicle/media update, including dashboard charts, pre-checks, quotations, approval guards, payment simulation and customer portal. No browser page errors.
 28 October 2026: user explicitly authorised displaying/publishing the supplied real bank details and QR. PASS: dedicated admin/customer bank dialog, original JPEG served correctly, displayed account number checked against supplied image, real/demo distinction and accounts disabled pending Firebase. No bank transfer, QR payment or live authentication test performed. Earlier notes that the bank image is excluded are superseded by this authorised change.
+
+Firebase accounts — 28 October 2026:
+- PASS GitHub Linux Firestore ownership tests: verified owner access, denial for a different customer/anonymous/unverified user, immutable ownership, validated vehicle fields, owner-scoped queries, blocked role escalation and protected coordinator workflow updates. CI run: https://github.com/irridhuan-pixel/kcheck-cot-app/actions/runs/40692237056
+- PASS real Firebase SDK against local Auth emulator: password confirmation, sign-up, verification-email request, unverified-record gate, sign-out, wrong/correct password sign-in and password-reset request. No real users created or actual emails sent.
+- Fixed sign-out retaining the sign-up tab, discovered by the emulator browser test.
+- Local Firestore emulator startup is blocked by Windows Unix-socket loopback; rule tests succeeded in Linux CI instead.
+- Production rule deployment and end-to-end customer-record tests await project-owner CLI sign-in. Protected record forms remain gated off. No cloud photo access is permitted by the supplied Storage rules.
+- GitHub Pages was discovered to auto-publish stage1-demo. The integration push triggered that existing deployment and was disclosed. Follow-up source changes use firebase-accounts; no hosting settings were altered.
