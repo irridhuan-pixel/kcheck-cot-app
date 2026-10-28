@@ -1,23 +1,44 @@
-# KCHECK secure-account setup — first step
+# Firebase integration status — 28 October 2026
 
-Real secure accounts were selected on 28 October 2026. No Firebase project has been created or connected yet. Current customer account screens remain disabled and the existing portal remains a local demonstration.
+The owner supplied public web configuration for kcheck-service-tracker. It is saved in firebase-config.mjs. Firebase Authentication is implemented in secure.html / secure-app.mjs, separately from the local demo. Google Analytics is not loaded.
 
-## Create the project and web application
+## Implemented
 
-1. Sign into https://console.firebase.google.com/ with the Google account that should own KCHECK.
-2. Choose the option to create a project and name it KCHECK Service Tracker. Review any terms yourself. Google Analytics is optional and is not required for this account setup.
-3. When the project is ready, register a Web app using the </> option. Suggested app nickname: KCHECK Web. Do not enable hosting or deploy the website during this step.
-4. Copy the firebaseConfig object from the web-app setup or Project settings > Your apps. This is the public web configuration used to connect a browser app.
-5. Under Authentication, start setup and enable the Email/Password sign-in provider. Do not enable anonymous sign-in or public database rules.
-6. Provide the public firebaseConfig object so the application integration can be prepared. Do not provide a Google password, service-account private key, Admin SDK credential or downloaded service-account JSON.
+- Firebase email/password sign-up and sign-in.
+- Password confirmation, email verification and verification refresh.
+- Password reset and sign-out; browser-session authentication persistence.
+- Separate protected workspace for verified customers to add vehicles and submit service requests.
+- Owner-filtered Firestore queries and rules enforcing account ownership, verified email, immutable ownership, validated fields and coordinator-only workflow updates.
+- No import or migration of demo localStorage or IndexedDB photos into Firebase.
+- Cloud Storage deny-all rules until a protected cloud-photo feature is implemented and tested. Existing photo galleries remain browser-local demonstrations.
 
-Stop here for now. Creating a project does not itself make the current demo secure. Before any real customer use, implementation must separate production and demo data, enforce record ownership in Firestore rules, protect photo storage, configure admin permissions, handle verification/reset flows and test one customer being denied access to another customer's data. Nothing should be copied from local demo storage to a public database.
+## Activation gate
 
-If a step requests a billing upgrade, stop and review the requirement before accepting it. Shared cloud photo storage may require a separate billing/setup decision. No paid services are enabled by these repository files.
+protectedWorkspaceReady in firebase-config.mjs is false. Account authentication can operate once Email/Password and authorised domains are configured, but the app will not expose a customer-record form until tested rules are deployed and the gate is enabled. A client flag is not the security boundary; the deployed Firebase rules must enforce access independently.
+
+The local Firestore emulator could not start due to a Windows Unix-socket error. A GitHub Linux CI workflow runs the supplied ownership tests against an emulated demo project without production credentials. Do not enable the record workspace unless those tests pass and the exact tested rules are deployed.
+
+## Required project-owner setup
+
+1. Enable Email/Password under Authentication in Firebase Console.
+2. Under Authentication settings > Authorised domains, add localhost for local review if missing, plus the final approved website domain when known. Do not deploy the website as part of this step.
+3. Create the default Cloud Firestore database in production/locked mode if absent. Review the region before confirming. Do not choose public test rules.
+4. Sign into the Firebase CLI with the Google account that owns the project, then deploy only the tested Firestore rules:
+   node node_modules/firebase-tools/lib/bin/firebase.js deploy --only firestore:rules --project kcheck-service-tracker
+5. Validate the deployed rules, then set protectedWorkspaceReady=true and test with two verified test accounts before allowing real customer records.
+
+No Firebase Hosting configuration is included and no website deployment is performed. No billing upgrade or cloud photo storage is enabled by these files. Cloud Storage setup requires a separate decision before real media upload.
+
+Admin access requires a trusted server-set custom claim admin=true. The local demo COT Admin login is not a Firebase administrator and cannot grant roles. Customer registration cannot assign admin permissions. Admin workflow UI, cloud quotation decisions and production payment verification are not connected yet; the protected customer area currently handles owned vehicles and new service requests only.
+
+## Tests
+
+- verify-firebase-auth.cjs exercises the real Firebase SDK against the local Auth emulator. It never creates live users or sends actual emails.
+- verify-firebase-rules.mjs exercises ownership and role boundaries in the Firestore emulator.
+- .github/workflows/firebase-security.yml runs rule tests on Linux. It has read-only repository permission and no deployment step or Firebase credentials.
 
 Official documentation:
 - https://firebase.google.com/docs/web/setup
 - https://firebase.google.com/docs/auth/web/password-auth
 - https://firebase.google.com/docs/rules/rules-and-auth
-
-The bank/QR addition is separate from account activation. It supplies real workshop payment instructions while the app's transaction records remain simulated. No automated bank reconciliation or payment gateway is configured.
+- https://firebase.google.com/docs/rules/unit-tests

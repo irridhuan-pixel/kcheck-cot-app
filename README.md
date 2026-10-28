@@ -107,3 +107,11 @@ vehicle-media.js contains optional vehicle fields and IndexedDB galleries. custo
 
 
 Real secure accounts were selected. Firebase project creation is the next external setup step; see FIREBASE-SETUP.md. Sign-up/sign-in remains disabled until the backend, ownership rules and access tests are implemented. The bank instructions are enabled separately and do not activate real account access.
+
+## Firebase customer accounts — integration pending backend activation
+
+The supplied Firebase web configuration is now connected to a separate secure.html account entry. Sign-up, sign-in, email verification, password reset and sign-out use Firebase Authentication. Only verified accounts may access the future protected workspace. It does not load the local demo data or photo storage, and Google Analytics is not loaded.
+
+firestore.rules contains server-enforced ownership and field validation for customer vehicles and service requests. storage.rules denies all production photo access until that feature is implemented/tested. Protected record forms are gated off until tested Firestore rules are deployed. Existing local demo functions remain labelled demonstrations.
+
+See FIREBASE-SETUP.md for project-owner setup, test status and remaining limitations. Older notes that accounts are disabled previews are superseded by this separate Firebase account entry; protected customer record access still requires deployment and activation. No website, billing or cloud-storage deployment is included.

@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function verified() { return request.auth != null && request.auth.token.email_verified == true; }
+    function owner(data) { return verified() && data.ownerUid == request.auth.uid; }
+    function admin() { return verified() && request.auth.token.admin == true; }
+    function validVehicle(d) {
+      return d.keys().hasAll(['ownerUid','plate','model','year','odometer','colour','tyreSize','createdAt'])
+        && d.keys().hasOnly(['ownerUid','plate','model','year','odometer','colour','tyreSize','createdAt'])
+        && d.plate is string && d.plate.size() > 0 && d.plate.size() <= 30
+        && d.model is string && d.model.size() > 0 && d.model.size() <= 100
+        && (d.year == null || (d.year is int && d.year >= 1900 && d.year <= 2100))
+        && (d.odometer == null || (d.odometer is int && d.odometer >= 0 && d.odometer <= 9999999))
+        && d.colour is string && d.colour.size() <= 60
+        && d.tyreSize is string && d.tyreSize.size() <= 60;
+    }
+    match /vehicles/{id} {
+      allow read: if owner(resource.data) || admin();
+      allow create: if owner(request.resource.data) && validVehicle(request.resource.data)
+        && request.resource.data.createdAt == request.time;
+      allow update: if owner(resource.data) && owner(request.resource.data)
+        && validVehicle(request.resource.data)
+        && request.resource.data.ownerUid == resource.data.ownerUid
+        && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if false;
+    }
+    match /serviceRequests/{id} {
+      allow read: if owner(resource.data) || admin();
+      allow create: if owner(request.resource.data)
+        && request.resource.data.keys().hasAll(['ownerUid','vehicleId','complaint','status','coordinatorNotes','createdAt'])
+        && request.resource.data.keys().hasOnly(['ownerUid','vehicleId','complaint','status','coordinatorNotes','createdAt'])
+        && request.resource.data.vehicleId is string
+        && get(/databases/$(database)/documents/vehicles/$(request.resource.data.vehicleId)).data.ownerUid == request.auth.uid
+        && request.resource.data.complaint is string && request.resource.data.complaint.size() > 0 && request.resource.data.complaint.size() <= 1500
+        && request.resource.data.status == 'New Request' && request.resource.data.coordinatorNotes == ''
+        && request.resource.data.createdAt == request.time;
+      allow update: if admin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','coordinatorNotes'])
+        && request.resource.data.status in ['New Request','Under Inspection','Awaiting Quotation','Repair in Progress','Ready for Collection','Completed','Cancelled']
+        && request.resource.data.coordinatorNotes is string && request.resource.data.coordinatorNotes.size() <= 2000;
+      allow delete: if false;
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}
